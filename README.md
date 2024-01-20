@@ -23,12 +23,12 @@ ffmpeg -i <PATH_TO_VIDEO> -ss 00:03 -to 01:07 -c:v libx264 -crf 30 <NEW_VIDEO_NA
 ```bash
 ffmpeg -i <PATH_TO_VIDEO> -vf  "setpts=0.25*PTS" <NEW_VIDEO_NAME>
 ```
-**<em>NOTE: </em>** This will speed up by 4 the video (1/0.25 = 4)
+**<em>NOTE: </em>** This will speed up by 4 the video (1/0.25 = 4).
 
 ```bash
 ffmpeg -i <PATH_TO_VIDEO> -vf  "setpts=4*PTS" <NEW_VIDEO_NAME>
 ```
-**<em>NOTE: </em>** This will slown down by 4 the video (1/0.25 = 4)
+**<em>NOTE: </em>** This will slown down the video by 4 the video.
 
 # Format Conversion
 
