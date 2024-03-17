@@ -44,7 +44,33 @@ For example:
 ffmpeg -i video.mkv converted_video.gif
 ```
 
+**IMPORTANT:** Sometimes the quality of the converted video can be bad. For exmple large pixels can be seen in GIFs, it's likely due to the limited color palette and resolution of GIF images. Here are a few additional tips you can try to mitigate this issue:
 
+* **Reduce the color depth**: GIFs typically use a limited color palette (often 256 colors), which can lead to pixelation, especially in videos with gradients or smooth color transitions. You can try reducing the color depth to improve quality. For example:
+    ```bash
+    ffmpeg -i input.mkv -vf "scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" output.gif
+    ```
+    This command reduces the color depth while applying the Lanczos scaling algorithm for better quality.
+
+* **Increase the output resolution**: While this may increase file size, it can also help mitigate pixelation issues, especially if the original video has a higher resolution. Try increasing the output resolution while keeping the aspect ratio intact. For example:
+    ```bash
+    ffmpeg -i input.mkv -vf "scale=640:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" output.gif
+    ```
+    This scales the output GIF to 640 pixels wide while maintaining the aspect ratio.
+
+* **Try different scaling algorithms**: Different scaling algorithms may produce different results in terms of pixelation. Experiment with different algorithms such as lanczos, bicubic, or nearest_neighbor to see which one works best for your video. For example:
+    ```bash
+    ffmpeg -i input.mkv -vf "scale=320:-1:flags=neighbor,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" output.gif
+    ```
+    This command uses the **nearest_neighbor** scaling algorithm.
+
+* **Adjust dithering options**: Dithering can help reduce pixelation by simulating additional colors and smoothing out transitions between them. You can experiment with different dithering options to see if it improves the quality of your GIF. For example:
+    ```bash
+    ffmpeg -i input.mkv -vf "scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse=dither=bayer:bayer_scale=5" output.gif
+    ```
+    This command applies Bayer dithering with a scale factor of 5.
+
+**Experiment with these options to find the combination that produces the best results for your specific video. Keep in mind that there may be trade-offs between quality and file size.**
 # Convert from Portrait to Landscape
 
 ```bash
